@@ -1,5 +1,7 @@
 require 'spec_helper'
 
-describe "" do
-  it 'true'
+describe TestParser::MiniTest do
+  it 'parses rspec describe' do
+    TestParser::Rspec.find_tests!
+  end
 end
