@@ -1,6 +1,4 @@
 require 'minitest/unit'
-require 'ruby_parser'
-require 'ruby2ruby'
 require 'models/test'
 
 class TestParser::MiniTest
