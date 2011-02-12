@@ -5,6 +5,8 @@ GEM
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
     diff-lcs (1.1.2)
+    fakefs (0.3.1)
+    minitest (2.0.2)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
       rspec-expectations (~> 2.5.0)
@@ -25,6 +27,9 @@ PLATFORMS
 
 DEPENDENCIES
   autotest
+  fakefs
+  minitest (~> 2.0.2)
   rspec (~> 2.5.0)
+  rspec-core (~> 2.5.0)
   ruby2ruby (~> 1.2.5)
   ruby_parser (~> 2.0.5)

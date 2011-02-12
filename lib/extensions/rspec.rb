@@ -3,3 +3,5 @@ module RSpec
     @world = new_world
   end
 end
+
+RSpec::Core::Runner.disable_autorun!
