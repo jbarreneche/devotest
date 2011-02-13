@@ -8,16 +8,34 @@ describe TestParser::MiniTest do
   after(:all) do
     MiniTest::Unit::TestCase.reset
   end
-  it 'parses minitest testcases' do
-    tests = TestParser::MiniTest.find_tests! path_for_test_project
-    tests.size.should == 1
-    test = tests.first
-    test.identification.should == 'TestSomething#test_foo'
-    test.to_code.should match_code(<<-TEST)
-      def test_foo
-        life = Life.new
-        assert life.alive?
+  describe '.find_tests!' do
+    context 'within test_project' do
+      before(:all) do
+        @tests = TestParser::MiniTest.find_tests! path_for_test_project
+        @test_identifications = @tests.map(&:identification)
       end
-    TEST
+      it 'finds all the tests' do
+        @tests.should have(2).tests
+      end
+      it 'finds normally declared test' do
+        @test_identifications.should include('TestSomething#test_foo')
+        test = @tests[@test_identifications.index('TestSomething#test_foo')]
+        test.to_code.should match_code(<<-TEST)
+          def test_foo
+            life = Life.new
+            assert life.alive?
+          end
+        TEST
+      end
+      it 'finds module shared tests' do
+        @test_identifications.should include('TestSomething#test_truth')
+        test = @tests[@test_identifications.index('TestSomething#test_truth')]
+        test.to_code.should match_code(<<-TEST)
+          def test_truth
+            assert true
+          end
+        TEST
+      end
+    end
   end
 end

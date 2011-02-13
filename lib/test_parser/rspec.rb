@@ -7,9 +7,12 @@ class TestParser::RSpec
       Dir[path + glob].each {|f| require f }
       
       world.example_groups.map(&:descendant_filtered_examples).flatten.map do |example|
-        line_number =  example.metadata[:line_number]
+        line_number = example.metadata[:line_number]
         snippet = SourceCode.for(example.file_path).extract_code_from_line(line_number)
-        Test.new("#{example.example_group.display_name}/#{example.description}", snippet)
+        example_description = example.description.empty? ? snippet.get_block.to_code : example.description
+        example_group_names = example.example_group.ancestors.reverse.map(&:display_name)
+        path_to_example = (example_group_names + [example_description]).join('/')
+        Test.new(path_to_example, snippet)
       end
     end
   end
