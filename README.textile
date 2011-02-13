@@ -1,0 +1,13 @@
+h1. deVoTest
+
+_Tracking peoples opinion on a project test_suite_
+
+h2. How does it work?
+
+# deVoTest parses your test suites
+# Now you can give feed back about your tests!
+
+h2. Requirements
+
+# Ruby 1.9.2
+# A test suite! (Can be with minitest or RSpec 2)
