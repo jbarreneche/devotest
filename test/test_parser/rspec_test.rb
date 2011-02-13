@@ -14,7 +14,6 @@ class RSpecTest < MiniTest::Unit::TestCase
   
   def test_rspec_parsing
     tests = TestParser::RSpec.find_tests!(path_for_test_project)
-    assert_equal 1, tests.size
     test = tests.first
     assert_equal 'Life/actually lives', test.identification
     assert code_matches?(test.to_code, <<-TEST)

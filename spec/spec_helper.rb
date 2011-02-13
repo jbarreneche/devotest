@@ -8,6 +8,6 @@ Dir[File.join(File.dirname(__FILE__), 'support', '**', '*.rb')].each {|f| requir
 
 require 'fakefs/spec_helpers'
 
-Rspec.configure do |config|
+RSpec.configure do |config|
   config.include ProjectsPaths
 end

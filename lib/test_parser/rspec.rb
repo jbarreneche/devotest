@@ -1,26 +1,37 @@
 require 'rspec/core'
 require 'extensions/rspec'
 
-class TestParser::RSpec
+class TestParser::RSpec < Struct.new(:example)
   def self.find_tests!(path, glob = 'spec/**/*_spec.rb')
-    with_world ::RSpec::Core::World.new do |world|
+    ::RSpec.with_world ::RSpec::Core::World.new do |world|
       Dir[path + glob].each {|f| require f }
       
-      world.example_groups.map(&:descendant_filtered_examples).flatten.map do |example|
-        line_number = example.metadata[:line_number]
-        snippet = SourceCode.for(example.file_path).extract_code_from_line(line_number)
-        example_description = example.description.empty? ? snippet.get_block.to_code : example.description
-        example_group_names = example.example_group.ancestors.reverse.map(&:display_name)
-        path_to_example = (example_group_names + [example_description]).join('/')
-        Test.new(path_to_example, snippet)
+      examples = world.example_groups.collect_concat(&:descendant_filtered_examples)
+      examples.map do |example|
+        new(example).build_test
       end
     end
   end
-  def self.with_world(world)
-    old_world = ::RSpec.world
-    ::RSpec.world = world
-    result = yield(world)
-    ::RSpec.world = old_world
-    result
+
+  def build_test
+    Test.new(test_identification, test_snippet)
+  end
+  def test_snippet
+    @test_snippet ||= begin
+      source_code = SourceCode.for(example.file_path)
+      source_code.extract_code_from_line(example_line_number)
+    end
+  end
+  def example_line_number
+    example.metadata[:line_number]
+  end
+  def example_description
+    example.description.empty? ? test_snippet.get_block.to_code : example.description
+  end
+  def test_identification
+    (example_group_names.reverse + [example_description]).join('/')
+  end
+  def example_group_names
+    example.example_group.ancestors.map(&:display_name)
   end
 end
