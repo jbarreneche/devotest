@@ -2,12 +2,20 @@ h1. deVoTest
 
 _Tracking peoples opinion on a project test_suite_
 
-h2. How does it work?
+h2. Current features
 
-# deVoTest parses your test suites
-# Now you can give feed back about your tests!
+# Parse RSpec2 Test suites
+# Parse MiniTest Test suites
+
+h2. How does (will) it work?
+
+# deVoTest parses your test suite
+# Now anyone can give their opinion of each test
+# Voting allows to rank your test suite and keep an eye on those test nobody likes
+
 
 h2. Requirements
 
 # Ruby 1.9.2
-# A test suite! (Can be with minitest or RSpec 2)
+# A project with a test suite! (Can be with minitest or RSpec 2)
+# The will to improve your test suite
