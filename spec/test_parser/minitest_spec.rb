@@ -8,15 +8,19 @@ describe TestParser::MiniTest do
   after(:all) do
     MiniTest::Unit::TestCase.reset
   end
+
   describe '.find_tests!' do
+
     context 'within test_project' do
       before(:all) do
         @tests = TestParser::MiniTest.find_tests! path_for_test_project
         @test_identifications = @tests.map(&:identification)
       end
+
       it 'finds all the tests' do
         @tests.should have(2).tests
       end
+
       it 'finds normally declared test' do
         @test_identifications.should include('TestSomething#test_foo')
         test = @tests[@test_identifications.index('TestSomething#test_foo')]
@@ -27,6 +31,7 @@ describe TestParser::MiniTest do
           end
         TEST
       end
+
       it 'finds module shared tests' do
         @test_identifications.should include('TestSomething#test_truth')
         test = @tests[@test_identifications.index('TestSomething#test_truth')]
