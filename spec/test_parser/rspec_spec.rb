@@ -1,12 +1,13 @@
 require 'spec_helper'
 
-require 'test_parser'
+require 'test_parser/rspec'
+
 describe TestParser::RSpec do
   describe '.find_test_suite!' do
     context 'within test_project' do
 
       before(:all) do
-        @test_suite = TestParser::RSpec.find_test_suite!(path_for_test_project)
+        @test_suite = TestParser::RSpec.find_tests!(path_for_test_project)
         @test_names = @test_suite.map(&:identification)
       end
 

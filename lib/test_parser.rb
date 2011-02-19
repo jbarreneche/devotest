@@ -1,11 +1,28 @@
 require 'pathname'
 require 'source_code'
 require 'models/test'
+require 'test_parser/common'
+require 'test_parser/minitest'
+require 'test_parser/rspec'
 
 module TestParser
 
-  def find_tests_in_project!(path)
-    MiniTest.find_tests!(path) + RSpec.find_tests!(path)
+  def all_tests(path, options = {})
+    frameworks = options[:frameworks] ||= [:rspec, :minitest]
+    path = sanitize_path(path)
+    frameworks.collect_concat do |framework|
+      send "#{framework}_tests", path, options[framework]
+    end
+  end
+
+  def minitest_tests(path, options = nil)
+    options ||= {}
+    MiniTest.find_tests!(path, options)
+  end
+
+  def rspec_tests(path, options = nil)
+    options ||= {}
+    RSpec.find_tests!(path, options)
   end
 
   def require_all(path, glob)
@@ -19,6 +36,3 @@ module TestParser
 
   extend self
 end
-
-require 'test_parser/minitest'
-require 'test_parser/rspec'

@@ -1,32 +1,40 @@
 require 'minitest/unit'
+require 'test_parser'
 
-class TestParser::MiniTest < Struct.new(:klass, :test_method)
+module TestParser
+  class MiniTest
+    attr_reader :klass, :test_method
 
-  def self.find_tests!(path, glob = 'test/**/*_test.rb')
+    def self.find_tests!(path, options = {})
+      glob = options[:glob] || 'test/**/*_test.rb'
 
-    TestParser.require_all(path, glob)
+      TestParser.require_all(path, glob)
 
-    MiniTest::Unit::TestCase.test_suites.collect_concat do |klass|
-      klass.test_methods.map do |test| 
-        new(klass, test).build_test
+      ::MiniTest::Unit::TestCase.test_suites.collect_concat do |klass|
+        klass.test_methods.map do |test| 
+          new(klass, test).build_test
+        end
       end
     end
-  end
 
-  def build_test
-    Test.new(test_identification, test_snippet)
-  end
+    include Common
 
-  def test_snippet
-    SourceCode.for(file_name).extract_method(test_method)
-  end
+    def initialize(klass, test_method)
+      @klass, @test_method = klass, test_method
+    end
 
-  def file_name
-    klass.instance_method(test_method).source_location.first
-  end
+    def test_snippet
+      test_source_code.extract_method(test_method)
+    end
 
-  def test_identification
-    "#{klass.name}##{test_method}"
+    def test_identification
+      "#{klass.name}##{test_method}"
+    end
+
+    def test_file_name
+      klass.instance_method(test_method).source_location.first
+    end
+
   end
 
 end

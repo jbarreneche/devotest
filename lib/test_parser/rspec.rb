@@ -1,49 +1,60 @@
 require 'rspec/core'
 require 'extensions/rspec'
 
-class TestParser::RSpec < Struct.new(:example)
+require 'test_parser'
 
-  def self.find_tests!(path, glob = 'spec/**/*_spec.rb')
-    ::RSpec.with_world ::RSpec::Core::World.new do |world|
+module TestParser
+  class RSpec
+    attr_reader :example
 
-      TestParser.require_all(path, glob)
-      
-      examples = world.example_groups.collect_concat(&:descendant_filtered_examples)
-      examples.map do |example|
-        new(example).build_test
+    def self.find_tests!(path, options = {})
+      glob = options[:glob] || 'spec/**/*_spec.rb'
+
+      ::RSpec.with_world ::RSpec::Core::World.new do |world|
+
+        TestParser.require_all(path, glob)
+
+        groups   = world.example_groups
+        examples = groups.collect_concat(&:descendant_filtered_examples)
+        examples.map do |example|
+          new(example).build_test
+        end
       end
     end
-  end
 
-  def build_test
-    Test.new(test_identification, test_snippet)
-  end
-
-  def test_snippet
-    @test_snippet ||= begin
-      source_code = SourceCode.for(example.file_path)
-      source_code.extract_code_from_line(example_line_number)
+    include Common
+    
+    def initialize(example)
+      @example = example
     end
-  end
 
-  def example_line_number
-    example.metadata[:line_number]
-  end
-
-  def example_description
-    unless example.description.empty? 
-      example.description
-    else
-      test_snippet.get_block.to_code
+    def test_snippet
+      @test_snippet ||= test_source_code.extract_code_from_line(line_number)
     end
-  end
 
-  def test_identification
-    (example_group_names.reverse + [example_description]).join('/')
-  end
+    def test_file_name
+      example.file_path
+    end
 
-  def example_group_names
-    example.example_group.ancestors.map(&:display_name)
-  end
+    def test_identification
+      (example_group_names.reverse + [example_description]).join('/')
+    end
 
+    def line_number
+      example.metadata[:line_number]
+    end
+
+    def example_group_names
+      example.example_group.ancestors.map(&:display_name)
+    end
+
+    def example_description
+      unless example.description.empty? 
+        example.description
+      else
+        test_snippet.get_block.to_code
+      end
+    end
+
+  end
 end
