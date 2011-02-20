@@ -10,6 +10,47 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20110220121829) do
+
+  create_table "comments", :force => true do |t|
+    t.integer  "comentable_id"
+    t.string   "comentable_type"
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.string   "git_repository"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "test_definitions", :force => true do |t|
+    t.string   "identification"
+    t.text     "snippet"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "test_definitions_test_suites", :id => false, :force => true do |t|
+    t.integer "test_definition_id"
+    t.integer "test_suite_id"
+  end
+
+  create_table "test_suites", :force => true do |t|
+    t.integer  "project_id"
+    t.string   "revision"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "votes", :force => true do |t|
+    t.integer  "test_definition_id"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

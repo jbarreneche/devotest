@@ -2,7 +2,7 @@ module TestParser
   module Common
 
     def build_test
-      TestDefinition.new(test_identification, test_snippet)
+      TestDefinition.new(:identification => test_identification, :snippet => test_snippet)
     end
 
     def test_source_code
