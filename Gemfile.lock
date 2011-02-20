@@ -52,6 +52,9 @@ GEM
       rake (>= 0.8.7)
     g (1.4.0)
       ruby-growl (>= 1.0.1)
+    grit (2.4.1)
+      diff-lcs (~> 1.1)
+      mime-types (~> 1.15)
     guessmethod (0.2.1)
       rake (>= 0.7)
     hirb (0.3.6)
@@ -140,6 +143,7 @@ DEPENDENCIES
   annotate
   autotest
   fakefs
+  grit (~> 2.4.1)
   irbtools
   levenshtein-ffi
   minitest (~> 2.0.2)

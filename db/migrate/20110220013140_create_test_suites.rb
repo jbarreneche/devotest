@@ -16,5 +16,6 @@ class CreateTestSuites < ActiveRecord::Migration
 
   def self.down
     drop_table :test_suites
+    drop_table :test_definitions_test_suites
   end
 end

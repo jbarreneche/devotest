@@ -1,4 +1,5 @@
 class TestSuite < ActiveRecord::Base
+  default_scope order('created_at DESC')
   has_and_belongs_to_many :tests, :class_name => "TestDefinition"
   include Enumerable
   
