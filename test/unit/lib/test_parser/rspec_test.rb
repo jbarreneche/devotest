@@ -1,10 +1,4 @@
-require 'minitest/autorun'
-
-require 'bundler'
-Bundler.setup
-Bundler.require :default
-
-require_relative '../../spec/support/projects_paths'
+require 'test_helper'
 require 'test_parser'
 
 # This test is only to check there isn't any side effect for testing with Rspec

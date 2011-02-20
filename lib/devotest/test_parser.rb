@@ -1,6 +1,6 @@
 require 'pathname'
 require 'source_code'
-require 'models/test'
+
 require 'test_parser/common'
 require 'test_parser/minitest'
 require 'test_parser/rspec'
