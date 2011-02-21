@@ -2,6 +2,8 @@ h1. deVoTest
 
 _Tracking peoples opinion on a project test_suite_
 
+Currently can be tested with this project 'git@github.com:jbarreneche/s5-e3.git'
+
 h2. Current features
 
 # Parse RSpec2 Test suites
@@ -13,9 +15,13 @@ h2. How does (will) it work?
 # Now anyone can give their opinion of each test
 # Voting allows to rank your test suite and keep an eye on those test nobody likes
 
-
 h2. Requirements
 
 # Ruby 1.9.2
 # A project with a test suite! (Can be with minitest or RSpec 2)
 # The will to improve your test suite
+
+
+h2. Current issues
+
+# Project that use bundler for gem dependencies

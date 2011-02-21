@@ -3,22 +3,26 @@ class Project < ActiveRecord::Base
   has_many :test_suites
 
   def initialize_repo
-    if persisted? && project_not_retrieved?
+    unless project_retrieved?
       ProjectRetriever.initialize_repo(git_repository, local_repo_path.to_s)
     end
   end
 
   def rebuild_current_test_suite
-    initialize_repo if project_not_retrieved?
+    initialize_repo unless project_retrieved?
     
-    revision = ProjectRetriever.latest_test_suite_revision(local_repo_path.to_s)
+    retriever = ProjectRetriever.new(self)
+    revision = retriever.latest_test_suite_revision
     return current_test_suite if revision == current_test_suite.try(:revision)
 
-    self.test_suites.build :tests => TestParser.all_tests(local_repo_path)
+    if tests = retriever.retrieve_tests
+      tests.map! {|test| TestDefinition.build_from_info(test) }
+      self.test_suites.create :tests => tests, :revision => revision
+    end
   end
 
   def current_test_suite
-    test_suites.last
+    test_suites.first
   end
 
   def local_repo_path
@@ -26,7 +30,7 @@ class Project < ActiveRecord::Base
     Rails.root + "tmp" + id.to_s
   end
 
-  def project_not_retrieved?
+  def project_retrieved?
     persisted? && local_repo_path.exist?
   end
 end

@@ -5,9 +5,17 @@ class TestDefinition < ActiveRecord::Base
   has_and_belongs_to_many :test_suites
 
   delegate :sexp, :to_code, :to => :snippet
-  serialize :snippet, Snippet
+  serialize :snippet, TestParser::Snippet
+
+  def self.build_from_info(test)
+    new(
+      :snippet        => test.snippet,
+      :identification => test.identification
+    )
+  end
 
 end
+
 # == Schema Information
 #
 # Table name: test_definitions
