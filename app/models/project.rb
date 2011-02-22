@@ -12,7 +12,7 @@ class Project < ActiveRecord::Base
     initialize_repo unless project_retrieved?
     
     retriever = ProjectRetriever.new(self)
-    revision = retriever.latest_test_suite_revision
+    revision  = retriever.latest_test_suite_revision
     return current_test_suite if revision == current_test_suite.try(:revision)
 
     if tests = retriever.retrieve_tests
@@ -33,6 +33,7 @@ class Project < ActiveRecord::Base
   def project_retrieved?
     persisted? && local_repo_path.exist?
   end
+
 end
 
 # == Schema Information
