@@ -5,6 +5,7 @@ class CreateTestDefinitions < ActiveRecord::Migration
       t.references :previous_test_version
       t.string     :identification
       t.text       :snippet
+      t.string     :testing_framework
 
       t.timestamps
     end

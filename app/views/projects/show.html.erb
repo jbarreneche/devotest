@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @project.name %>
+</p>
+
+<p>
+  <b>Git repository:</b>
+  <%= @project.git_repository %>
+</p>
+
+<% if @project.current_test_suite? %>
+  <p>
+    <b>Current Test suite:</b>
+    <ul>
+      <%- @project.current_test_suite.take(5).each do |test| %>
+        <%= render :partial => 'test_suites/test_definition_item', :object => test %>
+      <% end %>
+    </ul>
+    <%= link_to 'See full test suite', project_test_suite_path(@project) %>
+  </p>
+<% end %>
+
+<%= link_to 'Update test suite', update_test_suite_project_path(@project), :method => :put %> | 
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>

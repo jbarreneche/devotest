@@ -9,8 +9,11 @@ module Devotest
       @project = project
     end
 
-    def self.initialize_repo(repository, local_path)
-      Grit::Git.new('.').clone({}, repository, local_path)
+    def self.initialize_repo(project)
+      repository = project.git_repository
+    
+      projects_dir = project.local_repo_path.to_s
+      Grit::Git.new(projects_dir).clone({}, repository, projects_dir)
     end
 
     def latest_test_suite_revision

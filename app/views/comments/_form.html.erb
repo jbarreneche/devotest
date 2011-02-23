@@ -1,0 +1,9 @@
+<%= form_for(Comment.new, :url => project_test_suite_test_comments_path(project, test)) do |f| %>
+  <div class="field">
+    <%= f.label :comment %><br />
+    <%= f.text_area :comment %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end%>

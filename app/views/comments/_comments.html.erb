@@ -1,0 +1,8 @@
+<ol>
+  <% comments.each do |comment| %>
+    <li><%= comment.comment %></li>
+  <% end %>
+</ol>
+<%= render :partial => 'form', :locals => {
+  :project => @project, :test => @test
+}%>

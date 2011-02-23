@@ -1,4 +1,4 @@
-require_relative 'project_retriever'
+require 'devotest/project_retriever'
 
 module Devotest
 end

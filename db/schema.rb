@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(:version => 20110220121829) do
 
   create_table "comments", :force => true do |t|
-    t.integer  "comentable_id"
-    t.string   "comentable_type"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -28,8 +28,11 @@ ActiveRecord::Schema.define(:version => 20110220121829) do
   end
 
   create_table "test_definitions", :force => true do |t|
+    t.integer  "test_suite_id"
+    t.integer  "previous_test_version_id"
     t.string   "identification"
     t.text     "snippet"
+    t.string   "testing_framework"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

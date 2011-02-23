@@ -4,14 +4,14 @@ class Project < ActiveRecord::Base
 
   def initialize_repo
     unless project_retrieved?
-      ProjectRetriever.initialize_repo(git_repository, local_repo_path.to_s)
+      Devotest::ProjectRetriever.initialize_repo(self)
     end
   end
 
   def rebuild_current_test_suite
     initialize_repo unless project_retrieved?
     
-    retriever = ProjectRetriever.new(self)
+    retriever = Devotest::ProjectRetriever.new(self)
     revision  = retriever.latest_test_suite_revision
     return current_test_suite if revision == current_test_suite.try(:revision)
 
@@ -25,6 +25,9 @@ class Project < ActiveRecord::Base
     test_suites.first
   end
 
+  def current_test_suite?
+    !current_test_suite.nil?
+  end
   def local_repo_path
     return '' unless persisted?
     Rails.root + "tmp" + id.to_s

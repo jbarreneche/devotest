@@ -13,6 +13,10 @@ gem 'ruby_parser', '~> 2.0.5'
 
 gem 'test_parser', '~> 0.0.3' #, :git => 'git://github.com/jbarreneche/test_parser.git'
 
+gem 'coderay', '~> 0.9.7'
+
+gem 'jquery-rails'
+
 group :test do
   gem 'autotest'
   gem 'fakefs', :require => 'fakefs/safe'

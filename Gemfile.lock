@@ -74,6 +74,9 @@ GEM
       sketches
       wirb (>= 0.2.2)
       zucker (>= 9)
+    jquery-rails (0.2.7)
+      rails (~> 3.0)
+      thor (~> 0.14.4)
     levenshtein-ffi (1.0.1)
       ffi
     mail (2.2.15)
@@ -147,9 +150,11 @@ PLATFORMS
 DEPENDENCIES
   annotate
   autotest
+  coderay (~> 0.9.7)
   fakefs
   grit (~> 2.4.1)
   irbtools
+  jquery-rails
   levenshtein-ffi
   minitest (~> 2.0.2)
   rails (~> 3.0.4)
