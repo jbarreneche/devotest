@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<%= div_for(@test) do %>
+  <p>
+    <b>Identification:</b>
+    <%= @test.identification %>
+  </p>
+
+  <%= raw CodeRay.scan(@test.to_code, :ruby).div %>
+
+  <div class='comments'>
+    <%= render :partial => 'comments/comments', :locals => {
+        :comments => @test.comments, :test => @test, :project => @test.project
+      } 
+    %>
+  </div>
+<% end %>
+
+<%= link_to "Go to Project current test suite", project_test_suite_path(@test.project) %> | 
+<%= link_to "See Project", project_path(@test.project) %>

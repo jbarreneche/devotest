@@ -28,8 +28,9 @@ ActiveRecord::Schema.define(:version => 20110220121829) do
   end
 
   create_table "test_definitions", :force => true do |t|
-    t.integer  "test_suite_id"
+    t.integer  "project_id"
     t.integer  "previous_test_version_id"
+    t.integer  "comments_count"
     t.string   "identification"
     t.text     "snippet"
     t.string   "testing_framework"

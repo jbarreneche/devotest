@@ -1,6 +1,0 @@
-<li id='<%= dom_id(test_definition_item) %>'>
-  <h4><%= link_to present_test_identification(test_definition_item), project_test_suite_test_path(@project, test_definition_item) %></h4>
-  <%= raw CodeRay.scan(test_definition_item.to_code, :ruby).div %>
-  <%= link_to "check comments", project_test_suite_test_comments_path(@project, test_definition_item), :remote => true %>
-  <div class='comments' />
-</li>

@@ -2,22 +2,21 @@ require 'yaml'
 
 module Devotest
   class ProjectRetriever
-    # extend self
+
     attr_reader :project
+
+    def self.initialize_repo(project)
+      repository   = project.git_repository
+      projects_dir = project.local_repo_path.to_s
+
+      Grit::Git.new(projects_dir).clone({}, repository, projects_dir)
+    end
 
     def initialize(project)
       @project = project
     end
 
-    def self.initialize_repo(project)
-      repository = project.git_repository
-    
-      projects_dir = project.local_repo_path.to_s
-      Grit::Git.new(projects_dir).clone({}, repository, projects_dir)
-    end
-
     def latest_test_suite_revision
-      repo = Grit::Repo.new(project.local_repo_path.to_s)
       repo.git.pull
       install_bundler_dependencies if project_uses_bundler?
       repo.commits.last.id
@@ -31,6 +30,18 @@ module Devotest
       YAML.load yaml if $?.success?
     end
 
+private
+
+    def run_safe_command(command)
+      Bundler.with_clean_env do
+        %x[unset BUNDLE_GEMFILE && cd #{project.local_repo_path} && #{command}]
+      end
+    end
+    
+    def repo
+      @repo ||= Grit::Repo.new(project.local_repo_path.to_s)
+    end
+
     def project_uses_bundler?
       File.exists?(project.local_repo_path + "Gemfile")
     end
@@ -39,10 +50,5 @@ module Devotest
       run_safe_command('bundle install vendor/bundle')
     end
 
-    def run_safe_command(command)
-      Bundler.with_clean_env do
-        %x[unset BUNDLE_GEMFILE && cd #{project.local_repo_path} && #{command}]
-      end
-    end
   end  
 end

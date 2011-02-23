@@ -1,0 +1,15 @@
+<%= content_tag_for(:li, test) do %>
+
+  <h4>
+    <%= link_to present_test_identification(test), 
+                project_test_path(project, test) %>
+  </h4>
+
+  <%= raw CodeRay.scan(test.to_code, :ruby).div %>
+
+  <div class='comments'>
+    <%= link_to "Check comments", 
+        project_test_comments_path(project, test), :remote => true %>
+  </div>
+
+<% end %>

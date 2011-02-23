@@ -5,7 +5,9 @@ class TestSuitesController < ApplicationController
   end
   
 private
+
   def end_of_association_chain
     @project ||= Project.find(params[:project_id])
   end
+
 end

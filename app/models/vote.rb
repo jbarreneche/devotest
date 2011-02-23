@@ -1,5 +1,7 @@
 class Vote < ActiveRecord::Base
+
   belongs_to :test_definition
+
 end
 
 # == Schema Information

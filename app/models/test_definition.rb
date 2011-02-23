@@ -1,9 +1,9 @@
-require 'forwardable'
-
 class TestDefinition < ActiveRecord::Base
-  belongs_to :previous_test_version, :class_name => "TestDefinition"
-  has_many :comments, :as => :commentable
+
   has_and_belongs_to_many :test_suites
+  has_many :comments, :as => :commentable
+  belongs_to :previous_test_version, :class_name => "TestDefinition"
+  belongs_to :project
 
   delegate :sexp, :to_code, :to => :snippet
   serialize :snippet, TestParser::Snippet

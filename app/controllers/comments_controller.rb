@@ -9,14 +9,20 @@ class CommentsController < ApplicationController
 
   def create
     @comment = end_of_association_chain.comments.create(params[:comment])
-    redirect_to :back
+    respond_to do |wants|
+      wants.html { redirect_to :back }
+      wants.js do 
+        @comments = end_of_association_chain.comments
+        render 'index'
+      end
+    end
   end
 
 private
+
   def end_of_association_chain
-    @project    ||= Project.find(params[:project_id])
-    @test_suite ||= @project.current_test_suite
-    @test       ||= @test_suite.tests.find(params[:test_id])
+    @project ||= Project.find(params[:project_id])
+    @test    ||= TestDefinition.find(params[:test_id])
   end
 
 end

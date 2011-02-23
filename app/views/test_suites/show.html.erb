@@ -10,17 +10,20 @@
   <%= @project.git_repository %>
 </p>
 
-<% if @project.current_test_suite? %>
-  <p>
-    <b>Current Test suite:</b>
-    <ul>
-      <%- @project.current_test_suite.each do |test| %>
-        <%= render :partial => 'test_definition_item', :object => test %>
-      <% end %>
-    </ul>
-  </p>
-<% end %>
+<p>
+  <b>Tests:</b>
+  <ul>
+    <%- @test_suite.each do |test| %>
+      <%= render :partial => 'test_item', :locals => {
+      :test => test, :project => @project
+      } %>
+    <% end %>
+  </ul>
+</p>
 
-<%= link_to 'Update test suite', update_test_suite_project_path(@project), :method => :put %> | 
+<%= link_to 'Update test suite', 
+            update_test_suite_project_path(@project), :method => :put %> | 
+
 <%= link_to 'Edit', edit_project_path(@project) %> |
+
 <%= link_to 'Back', projects_path %>
