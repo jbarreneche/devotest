@@ -2,26 +2,44 @@ h1. deVoTest
 
 _Tracking peoples opinion on a project test_suite_
 
-Currently can be tested with this project 'git@github.com:jbarreneche/s5-e3.git'
+(see below a use example)
 
 h2. Current features
 
-# Parse RSpec2 Test suites
-# Parse MiniTest Test suites
+# Create your project
+# Retrieve it's test_suite (using: "test_parser":https://github.com/jbarreneche/test_parser)
+# View all your tests code
+# Add comments to them!
 
-h2. How does (will) it work?
+h2. How does it work?
 
 # deVoTest parses your test suite
-# Now anyone can give their opinion of each test
-# Voting allows to rank your test suite and keep an eye on those test nobody likes
+# People provide feedback on the tests (looking at the current test implementation an or others people comment).
+# (still pending) Test Voting allows to rank your test suite and keep an eye on those test nobody likes.
 
 h2. Requirements
 
 # Ruby 1.9.2
-# A project with a test suite! (Can be with minitest or RSpec 2)
+# A project with a test suite! (Currently only minitest (v2.0.2) and/or RSpec 2 (v2.5.0))
 # The will to improve your test suite
 
 
 h2. Current issues
 
-# Project that use bundler for gem dependencies
+# Not fully compatible with bundler (although some cases might work)
+
+h2. Pending Features
+
+# Keep track of the evolution of individual tests
+# Update Generate only new tests
+
+h2. Example instructions:
+
+# Install dependencies with bundler: `bundle`
+# create database `rake db:migrate`
+# start the server `rails server`
+# Fire up a browser and click on "New Project"
+# Any one of these repo should work
+* "test_parser":git://github.com/jbarreneche/test_parser.git
+* "bin":git@github.com:jbarreneche/s5-e3.git (Private RMU repo)
+# Save and then click on "Update test suite" (this will take a while). You should now see all the tests and be able to comment.
