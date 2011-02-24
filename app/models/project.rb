@@ -37,7 +37,7 @@ class Project < ActiveRecord::Base
 
   def latest_version_parsed?
     current_test_suite? && 
-    current_test_suite.revision == retriever.latest_test_suite_revision
+    current_test_suite.revision == project_retriever.latest_test_suite_revision
   end
 
   def current_test_suite?
