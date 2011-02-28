@@ -25,7 +25,7 @@ module Devotest
     def retrieve_tests(libraries = %w[lib app example])
       libraries = libraries.map {|lib| "-I#{lib}" }.join(' ')
 
-      yaml = run_safe_command %{ruby #{libraries} -S test_parser .}
+      yaml = run_safe_command %{test_parser #{libraries}}
 
       YAML.load yaml if $?.success?
     end

@@ -11,7 +11,7 @@ gem 'rspec-rails', '~> 2.5.0'
 gem 'ruby2ruby', '~> 1.2.5'
 gem 'ruby_parser', '~> 2.0.5'
 
-gem 'test_parser', '~> 0.0.3' #, :git => 'git://github.com/jbarreneche/test_parser.git'
+gem 'test_parser', '~> 0.0.4'
 
 gem 'coderay', '~> 0.9.7'
 
